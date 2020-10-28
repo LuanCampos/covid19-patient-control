@@ -43,6 +43,17 @@ void SetCursorPosition(int XPos, int YPos)
    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
 
+int fileExists(const char* filename)
+{
+    FILE *file;
+    if (file = fopen(filename, "r"))
+    {
+        fclose(file);
+        return 1;
+    }
+    return 0;
+}
+
 int main()
 {
     setlocale(LC_ALL, "portuguese");
@@ -81,14 +92,18 @@ int main()
         scanf("%s", &login);
 
         SetCursorPosition(28, 10);
+
         int p=0;
+
         do
         {
             senha[p]=getch();
+
             if(senha[p]!='\r' && senha[p]!='\b')
             {
                 printf("*");
             }
+
             if(senha[p]=='\b' && p >= 1)
             {
                 p-=2;
@@ -96,9 +111,12 @@ int main()
                 printf(" ");
                 SetCursorPosition(29+p, 10);
             }
+
             p++;
+
         }
         while(senha[p-1]!='\r');
+
         senha[p-1]='\0';
 
         SetCursorPosition(0, 20);
@@ -117,6 +135,21 @@ int main()
 
     }
     while (podeEntrar != 1);
+
+    // Checando os arquivos
+    if (fileExists("listaPacientes.txt") == 0)
+    {
+        FILE *listaPacientes;
+        listaPacientes = fopen("listaPacientes.txt", "w");
+        fclose(listaPacientes);
+    }
+
+    if (fileExists("grupoDeRisco.txt") == 0)
+    {
+        FILE *grupoDeRisco;
+        grupoDeRisco = fopen("grupoDeRisco.txt", "w");
+        fclose(grupoDeRisco);
+    }
 
     // Menu Principal
     do
@@ -193,76 +226,139 @@ int main()
             case 3:
             {
                 PACIENTE novoPaciente;
+                int salvarCadastro = 0;
+                int ano = 2020;
+                int idade;
 
-                system("cls");
-                printf("\n  #-------------------  CADASTRO DE PACIENTES (COVID 19)  -------------------#");
-                printf("\n  |                                                                          |");
-                printf("\n  |                       CADASTRO DE NOVO PACIENTE                          |");
-                printf("\n  |                                                                          |");
-                printf("\n  |  NOME: ______________________________       CPF: _____________           |");
-                printf("\n  |                                                                          |");
-                printf("\n  |  TELEFONE: _______________       NASCIMENTO: __ / __ / ____              |");
-                printf("\n  |                                                                          |");
-                printf("\n  |  RUA: _____________________      N: ____    BAIRRO: ________________     |");
-                printf("\n  |                                                                          |");
-                printf("\n  |  CIDADE: _______________         ESTADO: __     CEP: _________           |");
-                printf("\n  |                                                                          |");
-                printf("\n  |  E-MAIL: ______________________________   DIAGNOSTICO: __ / __ / ____    |");
-                printf("\n  |                                                                          |");
-                printf("\n  |  COMORBIDADES: __________________________________________________        |");
-                printf("\n  |                                                                          |");
-                printf("\n  #--------------------------------------------------------------------------#");
+                // Cadastro de Paciente
+                do
+                {
+                    char temp;
 
-                SetCursorPosition(11, 5);
-                scanf("%s", &novoPaciente.nome);
+                    system("cls");
+                    printf("\n  #-------------------  CADASTRO DE PACIENTES (COVID 19)  -------------------#");
+                    printf("\n  |                                                                          |");
+                    printf("\n  |                       CADASTRO DE NOVO PACIENTE                          |");
+                    printf("\n  |                                                                          |");
+                    printf("\n  |  NOME: ______________________________       CPF: ____________            |");
+                    printf("\n  |                                                                          |");
+                    printf("\n  |  TELEFONE: _______________       NASCIMENTO: __ / __ / ____              |");
+                    printf("\n  |                                                                          |");
+                    printf("\n  |  RUA: _____________________      N: ____    BAIRRO: ________________     |");
+                    printf("\n  |                                                                          |");
+                    printf("\n  |  CIDADE: _______________         ESTADO: __     CEP: _________           |");
+                    printf("\n  |                                                                          |");
+                    printf("\n  |  E-MAIL: ______________________________   DIAGNOSTICO: __ / __ / ____    |");
+                    printf("\n  |                                                                          |");
+                    printf("\n  |  COMORBIDADES: __________________________________________________        |");
+                    printf("\n  |                                                                          |");
+                    printf("\n  #--------------------------------------------------------------------------#");
+                    printf("\n\n   (Registre nos campos acima os dados do paciente)");
+                    printf("\n   (Caso não haja comorbidades, deixar o campo em branco)");
 
-                SetCursorPosition(28, 5);
-                scanf("%s", &novoPaciente.cpf);
+                    SetCursorPosition(11, 5);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.nome);
 
-                SetCursorPosition(28, 7);
-                scanf("%s", &novoPaciente.telefone);
+                    SetCursorPosition(53, 5);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.cpf);
 
-                SetCursorPosition(28, 7);
-                scanf("%i", &novoPaciente.nasc.dia);
+                    SetCursorPosition(15, 7);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.telefone);
 
-                SetCursorPosition(28, 7);
-                scanf("%i", &novoPaciente.nasc.mes);
+                    SetCursorPosition(49, 7);
+                    scanf("%i", &novoPaciente.nasc.dia);
 
-                SetCursorPosition(28, 7);
-                scanf("%i", &novoPaciente.nasc.ano);
+                    SetCursorPosition(54, 7);
+                    scanf("%c",&temp);
+                    scanf("%i", &novoPaciente.nasc.mes);
 
-                SetCursorPosition(28, 9);
-                scanf("%s", &novoPaciente.endereco.rua);
+                    SetCursorPosition(59, 7);
+                    scanf("%i", &novoPaciente.nasc.ano);
 
-                SetCursorPosition(28, 9);
-                scanf("%s", &novoPaciente.endereco.n);
+                    SetCursorPosition(10, 9);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.endereco.rua);
 
-                SetCursorPosition(28, 9);
-                scanf("%s", &novoPaciente.endereco.bairro);
+                    SetCursorPosition(40, 9);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.endereco.n);
 
-                SetCursorPosition(28, 11);
-                scanf("%s", &novoPaciente.endereco.cidade);
+                    SetCursorPosition(56, 9);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.endereco.bairro);
 
-                SetCursorPosition(28, 11);
-                scanf("%s", &novoPaciente.endereco.estado);
+                    SetCursorPosition(13, 11);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.endereco.cidade);
 
-                SetCursorPosition(28, 11);
-                scanf("%s", &novoPaciente.endereco.cep);
+                    SetCursorPosition(45, 11);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.endereco.estado);
 
-                SetCursorPosition(28, 13);
-                scanf("%s", &novoPaciente.email);
+                    SetCursorPosition(57, 11);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.endereco.cep);
 
-                SetCursorPosition(28, 13);
-                scanf("%i", &novoPaciente.diagnostico.dia);
+                    SetCursorPosition(13, 13);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.email);
 
-                SetCursorPosition(28, 13);
-                scanf("%i", &novoPaciente.diagnostico.mes);
+                    SetCursorPosition(59, 13);
+                    scanf("%i", &novoPaciente.diagnostico.dia);
 
-                SetCursorPosition(28, 13);
-                scanf("%i", &novoPaciente.diagnostico.ano);
+                    SetCursorPosition(64, 13);
+                    scanf("%c",&temp);
+                    scanf("%i", &novoPaciente.diagnostico.mes);
 
-                SetCursorPosition(28, 15);
-                scanf("%s", &novoPaciente.comorbidades);
+                    SetCursorPosition(69, 13);
+                    scanf("%i", &novoPaciente.diagnostico.ano);
+
+                    SetCursorPosition(19, 15);
+                    scanf("%c",&temp);
+                    scanf("%[^\n]", &novoPaciente.comorbidades);
+
+                    SetCursorPosition(1, 19);
+                    printf("                                                                     ");
+                    printf("                                                                     ");
+                    SetCursorPosition(1, 19);
+                    printf("  > Deseja salvar este cadastro? (1 = sim; 0 = não) _");
+                    SetCursorPosition(53, 19);
+                    scanf("%i",&salvarCadastro);
+
+                }
+                while (salvarCadastro != 1);
+
+                FILE *listaPacientes;
+                listaPacientes = fopen("listaPacientes.txt", "a");
+
+                fprintf(listaPacientes, "NOME: %s\n", novoPaciente.nome);
+                fprintf(listaPacientes, "CPF: %s\n", novoPaciente.cpf);
+                fprintf(listaPacientes, "TELEFONE: %s\n", novoPaciente.telefone);
+                fprintf(listaPacientes, "ENDEREÇO: %s, nº %s\n", novoPaciente.endereco.rua, novoPaciente.endereco.n);
+                fprintf(listaPacientes, "BAIRRO: %s\n", novoPaciente.endereco.bairro);
+                fprintf(listaPacientes, "CIDADE: %s - %s\n", novoPaciente.endereco.cidade, novoPaciente.endereco.estado);
+                fprintf(listaPacientes, "CEP: %s\n", novoPaciente.endereco.cep);
+                fprintf(listaPacientes, "DATA DE NASCIMENTO: %s / %s / %d\n", novoPaciente.nasc.dia, novoPaciente.nasc.mes, novoPaciente.nasc.ano);
+                fprintf(listaPacientes, "E-MAIL: %s\n", novoPaciente.email);
+                fprintf(listaPacientes, "DATA DO DIAGNÓSTICO: %s / %s / %d\n", novoPaciente.diagnostico.dia, novoPaciente.diagnostico.mes, novoPaciente.diagnostico.ano);
+                fprintf(listaPacientes, "COMORBIDADES: %s\n\n\n", novoPaciente.comorbidades);
+                idade = ano - novoPaciente.nasc.ano;
+
+                fclose(listaPacientes);
+
+                FILE *grupoDeRisco;
+                grupoDeRisco = fopen("grupoDeRisco.txt", "a");
+
+                if (idade >= 65)
+                {
+                    fprintf(grupoDeRisco, "IDADE: %d\n", idade);
+                    fprintf(grupoDeRisco, "CEP: %s\n\n\n", novoPaciente.endereco.cep);
+                }
+
+                fclose(grupoDeRisco);
 
                 break;
             }
