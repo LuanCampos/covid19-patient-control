@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <windows.h>
 
 typedef struct data DATA;
 struct data
@@ -34,6 +35,12 @@ struct paciente
     char comorbidades[50];
 };
 
+void SetCursorPosition(int XPos, int YPos) {
+   COORD coord;
+   coord.X = XPos; coord.Y = YPos;
+   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
+}
+
 int main()
 {
     setlocale(LC_ALL, "portuguese");
@@ -63,6 +70,7 @@ int main()
         printf("\n  |                                                                          |");
         printf("\n  #--------------------------------------------------------------------------#");
         printf("\n\n  > Escolha uma opção: ");
+        SetCursorPosition(12, 12);
         scanf("%i", &opcao);
 
         switch(opcao)
