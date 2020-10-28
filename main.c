@@ -370,7 +370,7 @@ int main()
                 FILE *grupoDeRisco;
                 grupoDeRisco = fopen("grupoDeRisco.txt", "a");
 
-                if (idade >= 65)
+                if (idade >= 65 || !strcmp(novoPaciente.comorbidades, ""))
                 {
                     fprintf(grupoDeRisco, "IDADE: %i\n", idade);
                     fprintf(grupoDeRisco, "CEP: %s\n\n\n", novoPaciente.endereco.cep);
