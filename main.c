@@ -15,25 +15,25 @@ struct data
 typedef struct local LOCAL;
 struct local
 {
-    char rua[20];
-    char n[4];
-    char bairro[15];
-    char cidade[15];
-    char estado[2];
-    char cep[9];
+    char rua[30];
+    char n[10];
+    char bairro[20];
+    char cidade[20];
+    char estado[10];
+    char cep[10];
 };
 
 typedef struct paciente PACIENTE;
 struct paciente
 {
-    char nome[30];
-    char cpf[12];
-    char telefone[15];
+    char nome[40];
+    char cpf[20];
+    char telefone[20];
     LOCAL endereco;
     DATA nasc;
-    char email[30];
+    char email[40];
     DATA diagnostico;
-    char comorbidades[50];
+    char comorbidades[60];
 };
 
 void SetCursorPosition(int XPos, int YPos)
@@ -61,7 +61,7 @@ int main()
     int opcao = 0;
     int podeEntrar = 0;
 
-    // Página de Login
+    // Página de login
     do
     {
         char loginCorreto[15] = "CadastroCovid";
@@ -162,7 +162,7 @@ int main()
         printf("\n  |                                                                          |");
         printf("\n  |                                                                          |");
         printf("\n  |            1 - CONSULTAR LISTA DE PACIENTES                              |");
-        printf("\n  |            2 - CONSULTAR LISTA DE PACIENTES COM COMORBIDADES             |");
+        printf("\n  |            2 - CONSULTAR LISTA DE PACIENTES DO GRUPO DE RISCO            |");
         printf("\n  |            3 - CADASTRAR UM NOVO PACIENTE                                |");
         printf("\n  |                                                                          |");
         printf("\n  |            0 - SAIR                                                      |");
@@ -177,8 +177,14 @@ int main()
 
         switch(opcao)
         {
+            // Consulta de pacientes
             case 1:
             {
+                system("cls");
+                system("cls");
+                printf("\n--------------------------  CONSULTA DE PACIENTES  ----------------------------");
+                printf("\n\n\n\n";
+
                 FILE *listaPacientes;
                 listaPacientes = fopen("listaPacientes.txt", "r");
 
@@ -196,12 +202,18 @@ int main()
                 }
 
                 fclose(listaPacientes);
+                getch();
 
                 break;
             }
 
+            // Consulta de pacientes do grupo de risco
             case 2:
             {
+                system("cls");
+                printf("\n-----------------  CONSULTA DE PACIENTES (GRUPO DE RISCO)  --------------------");
+                printf("\n\n\n\n";
+
                 FILE *grupoDeRisco;
                 grupoDeRisco = fopen("grupoDeRisco.txt", "r");
 
@@ -219,10 +231,12 @@ int main()
                 }
 
                 fclose(grupoDeRisco);
+                getch();
 
                 break;
             }
 
+            // Cadastro de paciente
             case 3:
             {
                 PACIENTE novoPaciente;
@@ -230,7 +244,6 @@ int main()
                 int ano = 2020;
                 int idade;
 
-                // Cadastro de Paciente
                 do
                 {
                     char temp;
@@ -341,10 +354,15 @@ int main()
                 fprintf(listaPacientes, "BAIRRO: %s\n", novoPaciente.endereco.bairro);
                 fprintf(listaPacientes, "CIDADE: %s - %s\n", novoPaciente.endereco.cidade, novoPaciente.endereco.estado);
                 fprintf(listaPacientes, "CEP: %s\n", novoPaciente.endereco.cep);
-                fprintf(listaPacientes, "DATA DE NASCIMENTO: %s / %s / %d\n", novoPaciente.nasc.dia, novoPaciente.nasc.mes, novoPaciente.nasc.ano);
+                fprintf(listaPacientes, "DATA DE NASCIMENTO: %i / %i / %i\n", novoPaciente.nasc.dia, novoPaciente.nasc.mes, novoPaciente.nasc.ano);
                 fprintf(listaPacientes, "E-MAIL: %s\n", novoPaciente.email);
-                fprintf(listaPacientes, "DATA DO DIAGNÓSTICO: %s / %s / %d\n", novoPaciente.diagnostico.dia, novoPaciente.diagnostico.mes, novoPaciente.diagnostico.ano);
-                fprintf(listaPacientes, "COMORBIDADES: %s\n\n\n", novoPaciente.comorbidades);
+                fprintf(listaPacientes, "DATA DO DIAGNÓSTICO: %i / %i / %i\n", novoPaciente.diagnostico.dia, novoPaciente.diagnostico.mes, novoPaciente.diagnostico.ano);
+
+                if (strcmp(novoPaciente.comorbidades, ""))
+                    fprintf(listaPacientes, "COMORBIDADES:\n\n\n");
+                else
+                    fprintf(listaPacientes, "COMORBIDADES: %s\n\n\n", novoPaciente.comorbidades);
+
                 idade = ano - novoPaciente.nasc.ano;
 
                 fclose(listaPacientes);
@@ -354,7 +372,7 @@ int main()
 
                 if (idade >= 65)
                 {
-                    fprintf(grupoDeRisco, "IDADE: %d\n", idade);
+                    fprintf(grupoDeRisco, "IDADE: %i\n", idade);
                     fprintf(grupoDeRisco, "CEP: %s\n\n\n", novoPaciente.endereco.cep);
                 }
 
