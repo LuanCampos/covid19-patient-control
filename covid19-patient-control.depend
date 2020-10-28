@@ -6,8 +6,10 @@
 	<unistd.h>
 	<windows.h>
 
-1603811511 source:c:\users\campos\documents\c projects\covid19-patient-control\main.c
+1603923281 source:c:\users\campos\documents\c projects\covid19-patient-control\main.c
 	<stdio.h>
 	<stdlib.h>
 	<locale.h>
+	<unistd.h>
+	<windows.h>
 

@@ -331,11 +331,13 @@ int main()
 
                     SetCursorPosition(19, 15);
                     scanf("%c",&temp);
-                    scanf("%[^\n]", &novoPaciente.comorbidades);
+                    //scanf("%[^\n]", &novoPaciente.comorbidades);
+                    gets(novoPaciente.comorbidades);
 
                     SetCursorPosition(1, 19);
-                    printf("                                                                     ");
-                    printf("                                                                     ");
+                    printf("                                                                               ");
+                    printf("                                                                               ");
+                    printf("                                                                               ");
                     SetCursorPosition(1, 19);
                     printf("  > Deseja salvar este cadastro? (1 = sim; 0 = não) _");
                     SetCursorPosition(53, 19);
@@ -358,10 +360,14 @@ int main()
                 fprintf(listaPacientes, "E-MAIL: %s\n", novoPaciente.email);
                 fprintf(listaPacientes, "DATA DO DIAGNÓSTICO: %i / %i / %i\n", novoPaciente.diagnostico.dia, novoPaciente.diagnostico.mes, novoPaciente.diagnostico.ano);
 
-                if (strcmp(novoPaciente.comorbidades, ""))
+                if (!strcmp(novoPaciente.comorbidades, ""))
+                {
                     fprintf(listaPacientes, "COMORBIDADES:\n\n\n");
+                }
                 else
+                {
                     fprintf(listaPacientes, "COMORBIDADES: %s\n\n\n", novoPaciente.comorbidades);
+                }
 
                 idade = ano - novoPaciente.nasc.ano;
 
@@ -370,7 +376,7 @@ int main()
                 FILE *grupoDeRisco;
                 grupoDeRisco = fopen("grupoDeRisco.txt", "a");
 
-                if (idade >= 65 || !strcmp(novoPaciente.comorbidades, ""))
+                if (idade > 65 || strcmp(novoPaciente.comorbidades, ""))
                 {
                     fprintf(grupoDeRisco, "IDADE: %i\n", idade);
                     fprintf(grupoDeRisco, "CEP: %s\n\n\n", novoPaciente.endereco.cep);
