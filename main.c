@@ -183,7 +183,7 @@ int main()
                 system("cls");
                 system("cls");
                 printf("\n--------------------------  CONSULTA DE PACIENTES  ----------------------------");
-                printf("\n\n\n\n";
+                printf("\n\n\n\n");
 
                 FILE *listaPacientes;
                 listaPacientes = fopen("listaPacientes.txt", "r");
@@ -212,7 +212,7 @@ int main()
             {
                 system("cls");
                 printf("\n-----------------  CONSULTA DE PACIENTES (GRUPO DE RISCO)  --------------------");
-                printf("\n\n\n\n";
+                printf("\n\n\n\n");
 
                 FILE *grupoDeRisco;
                 grupoDeRisco = fopen("grupoDeRisco.txt", "r");
