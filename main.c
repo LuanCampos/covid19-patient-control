@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <unistd.h>
 #include <windows.h>
 
@@ -56,7 +55,12 @@ int fileExists(const char* filename)
 
 int main()
 {
-    setlocale(LC_ALL, "portuguese");
+    unsigned int cp = 1252;
+    unsigned int cpin = GetConsoleCP();
+    unsigned int cpout = GetConsoleOutputCP();
+
+    SetConsoleCP(cp);
+    SetConsoleOutputCP(cp);
 
     int opcao = 0;
     int podeEntrar = 0;
@@ -404,6 +408,8 @@ int main()
     }
     while (opcao != 0);
 
+    SetConsoleCP(cpin);
+    SetConsoleOutputCP(cpout);
 
     return 0;
 }
