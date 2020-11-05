@@ -192,7 +192,7 @@ int main()
 						}
 						else
 						{
-							printf(" [!] Usuário incorreto! Pressione ENTER para continuar...");
+							printf(" [!] Usuário não encontrado! Pressione ENTER para continuar...");
 							podeEntrar = 0;
 							getch();
 						}
@@ -270,7 +270,7 @@ int main()
 									break;
 								}
 
-								// Consulta de pacientes do grupo de risco
+                            // Consulta de pacientes do grupo de risco
 							case 2:
 								{
 									system("cls");
@@ -299,7 +299,7 @@ int main()
 									break;
 								}
 
-								// Cadastro de paciente
+                            // Cadastro de pacientes
 							case 3:
 								{
 									PACIENTE novoPaciente;
@@ -393,7 +393,6 @@ int main()
 
 										SetCursorPosition(19, 15);
 										scanf("%c", &temp);
-										//scanf("%[^\n]", &novoPaciente.comorbidades);
 										gets(novoPaciente.comorbidades);
 
 										SetCursorPosition(1, 19);
