@@ -64,6 +64,38 @@ int main()
 
     int opcao = 0;
     int podeEntrar = 0;
+    int confirma = 0;
+
+    // Logar ou criar usuário?
+    do
+    {
+
+    system("cls");
+    printf("\n  #-------------------  CADASTRO DE PACIENTES (COVID 19)  -------------------#");
+    printf("\n  |                                                                          |");
+    printf("\n  |                                                                          |");
+    printf("\n  |                               BEM-VINDO!                                 |");
+    printf("\n  |                                                                          |");
+    printf("\n  |                                                                          |");
+    printf("\n  |            1 - FAZER LOGIN                                               |");
+    printf("\n  |            2 - CRIAR NOVO USUÁRIO                                        |");
+    printf("\n  |                                                                          |");
+    printf("\n  |                                                                          |");
+    printf("\n  |            0 - SAIR                                                      |");
+    printf("\n  |                                                                          |");
+    printf("\n  |                                                                          |");
+    printf("\n  |                                                                          |");
+    printf("\n  |                                                                          |");
+    printf("\n  |                                                                          |");
+    printf("\n  #--------------------------------------------------------------------------#");
+    printf("\n\n  > Escolha uma opção: ");
+    scanf("%i", &opcao);
+
+    switch(opcao)
+    {
+
+    case 1:
+    {
 
     // Página de login
     do
@@ -392,6 +424,31 @@ int main()
             }
 
             case 0:
+            {
+                break;
+            }
+
+            default:
+            {
+                printf("\n\n  [!] Opção inválida! Pressione ENTER para continuar...");
+                getch();
+                break;
+            }
+
+        }
+
+    }
+    while (opcao != 0);
+    break;
+    }
+
+    case 2:
+    {
+        // Página de Criação de Usuário
+        break;
+    }
+
+    case 0:
             {
                 break;
             }
